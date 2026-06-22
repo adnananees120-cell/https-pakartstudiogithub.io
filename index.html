@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>PakArt Studio</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:Arial;
+    background:black;
+    color:white;
+}
+
+/* RGB HEADER */
+header{
+    text-align:center;
+    padding:25px;
+    background:linear-gradient(90deg,red,blue,green);
+    animation:rgb 5s linear infinite;
+}
+
+@keyframes rgb{
+    0%{filter:hue-rotate(0deg);}
+    100%{filter:hue-rotate(360deg);}
+}
+
+h1{font-size:40px}
+
+/* GRID */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+    padding:20px;
+}
+
+/* CATEGORY */
+.cat{
+    padding:20px;
+    background:#111;
+    text-align:center;
+    border-radius:12px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.cat:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 15px cyan;
+}
+
+/* PAGE */
+.page{
+    display:none;
+    text-align:center;
+    padding:40px;
+}
+
+/* BUTTON */
+.btn{
+    display:inline-block;
+    padding:12px 20px;
+    margin:10px;
+    border-radius:10px;
+    background:linear-gradient(45deg,red,blue,green);
+    color:white;
+    text-decoration:none;
+}
+
+/* BACK */
+.back{
+    display:block;
+    margin-top:20px;
+    cursor:pointer;
+    color:cyan;
+}
+
+/* FLOAT CHAT */
+.chat{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    background:linear-gradient(45deg,green,cyan);
+    padding:15px;
+    border-radius:50%;
+    font-size:20px;
+    text-decoration:none;
+    color:black;
+    box-shadow:0 0 15px cyan;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<h1>PakArt Studio 🎨</h1>
+<p>Explore Categories → Choose Design → Send Screenshot → Order</p>
+</header>
+
+<div id="home" class="grid"></div>
+<div id="pages"></div>
+
+<!-- FLOATING CHAT -->
+<a class="chat" href="https://wa.me/923482670420">💬</a>
+
+<script>
+
+let number = "923482670420";
+
+/* 100 CATEGORIES */
+let categories = [
+"Anime","Cartoon","Oil Painting","Abstract","Portrait","Landscape","Islamic Art","Calligraphy","Modern Art","Nature",
+"City Art","3D Art","Digital Art","Sketch","Pencil Art","Watercolor","Graffiti","Fantasy","Horror","Minimalist",
+"Luxury Art","Classic Art","Vintage","Black & White","Color Splash","Pop Art","Street Art","Surreal","Kids Art","Animals",
+"Birds","Sea Art","Mountains","Flowers","Space Art","Galaxy","Fire Art","Water Theme","Couple Art","Family Art",
+"Custom Art","Wall Decor","Office Art","Room Art","Bedroom Art","Living Room","Hall Art","Large Canvas","Mini Canvas","Frame Art",
+"Canvas Prints","Texture Art","Gold Leaf Art","Silver Art","Neon Art","RGB Art","Glow Art","Pattern Art","Mandala","Geometric",
+"Spiritual Art","Religious Art","Islamic Calligraphy","Arabic Art","Urdu Art","Typography","Quotes Art","Motivation Art","Love Art","Sad Art",
+"Dark Art","Light Art","Seasonal Art","Winter Art","Summer Art","Rain Art","Sunset","Sunrise","Night Art","Day Art",
+"Festival Art","Eid Art","Ramadan Art","Wedding Art","Birthday Art","Event Art","Abstract Lines","Shapes Art","Color Mix","Creative Art",
+"Experimental Art","AI Art","Modern Patterns","Traditional Art","Heritage Art","Culture Art","Pakistan Art","Desert Art","Village Art","Nature Realism"
+];
+
+let home = document.getElementById("home");
+let pages = document.getElementById("pages");
+
+/* CREATE CATEGORY CARDS */
+categories.forEach((cat,i)=>{
+    home.innerHTML += `<div class="cat" onclick="openPage(${i})">${cat}</div>`;
+});
+
+/* CREATE PAGES */
+categories.forEach((cat,i)=>{
+
+    let searchLink = "https://unsplash.com/s/photos/" + encodeURIComponent(cat + " painting");
+
+    let msg = encodeURIComponent("Hello PakArt Studio! I want to order from " + cat + ". I will send image.");
+
+    pages.innerHTML += `
+    <div class="page" id="page${i}">
+        <h2>${cat}</h2>
+
+        <p>Step 1: Click below to view designs</p>
+
+        <a class="btn" href="${searchLink}" target="_blank">
+        🎨 View Designs
+        </a>
+
+        <p>Step 2: Take screenshot of your favorite painting</p>
+        <p>Step 3: Send it to us on WhatsApp</p>
+
+        <a class="btn" href="https://wa.me/${number}?text=${msg}">
+        📩 Send on WhatsApp
+        </a>
+
+        <span class="back" onclick="goBack()">⬅ Back</span>
+    </div>
+    `;
+});
+
+/* OPEN PAGE */
+function openPage(id){
+    document.getElementById("home").style.display="none";
+    document.querySelectorAll(".page").forEach(p=>p.style.display="none");
+    document.getElementById("page"+id).style.display="block";
+}
+
+/* BACK */
+function goBack(){
+    document.getElementById("home").style.display="grid";
+    document.querySelectorAll(".page").forEach(p=>p.style.display="none");
+}
+
+</script>
+
+</body>
+</html>
